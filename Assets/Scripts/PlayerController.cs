@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Purchasing;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,16 +11,38 @@ public class PlayerController : MonoBehaviour
     public float mouseSens;
     public Transform camT;
     Rigidbody rb;
+    private LayerMask layerMask;
+    public float pickupDistance;
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
 
         rb = GetComponent<Rigidbody>();
+        layerMask = LayerMask.GetMask("Pickup");
     }
+    
 
-    // Update is called once per frame
-    void Update()
+
+void HandleRaycasting()
+{
+    RaycastHit hitInfo;
+
+    if(Physics.Raycast(camT.position, camT.forward, out hitInfo, pickupDistance, layerMask))
     {
+        PickupComponent pc = hitInfo.collider.gameObject.GetComponent<PickupComponent>();
+
+        if (pc != null)
+        {
+            pc.EnableHighlight();
+        }
+    }
+}
+
+// Update is called once per frame
+void Update()
+    {
+        HandleRaycasting();
+
         if(Input.GetKeyDown(KeyCode.Space))
         {
             if(Physics.BoxCast(transform.position, new Vector3(0.5f, 0, 0.5f), -Vector3.up, Quaternion.identity, 1f))
