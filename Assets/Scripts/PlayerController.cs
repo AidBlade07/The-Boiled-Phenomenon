@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody rb;
     private LayerMask layerMask;
     public float pickupDistance;
+    bool hasPickup;
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -27,13 +28,26 @@ void HandleRaycasting()
 {
     RaycastHit hitInfo;
 
-    if(Physics.Raycast(camT.position, camT.forward, out hitInfo, pickupDistance, layerMask))
+    if(Physics.Raycast(camT.position, camT.forward, out hitInfo, pickupDistance))
     {
         PickupComponent pc = hitInfo.collider.gameObject.GetComponent<PickupComponent>();
 
         if (pc != null)
         {
             pc.EnableHighlight();
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    if(hasPickup)
+                    {
+                        pc.Drop();
+                        hasPickup = false;
+                    }
+                    else
+                    {
+                        pc.Pickup(camT);
+                        hasPickup = true;
+                    }
+                }
         }
     }
 }
@@ -41,6 +55,8 @@ void HandleRaycasting()
 // Update is called once per frame
 void Update()
     {
+
+
         HandleRaycasting();
 
         if(Input.GetKeyDown(KeyCode.Space))
@@ -75,6 +91,8 @@ void Update()
         camT.eulerAngles = Vector3.Scale(camT.eulerAngles, new Vector3(1, 1, 0));
 
         transform.eulerAngles = Vector3.Scale(transform.eulerAngles, new Vector3(0, 1, 0));
+
+        rb.linearVelocity = Vector3.Scale(rb.linearVelocity, new Vector3(0.9f, 1, 0.9f));
     }
 
     private void LateUpdate()
