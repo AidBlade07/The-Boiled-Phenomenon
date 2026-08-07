@@ -13,6 +13,6 @@ public class WorldCanvas : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    transform.LookAt(playerT);
+        transform.LookAt(playerT);
     }
 }

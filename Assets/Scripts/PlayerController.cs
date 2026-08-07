@@ -14,12 +14,15 @@ public class PlayerController : MonoBehaviour
     private LayerMask layerMask;
     public float pickupDistance;
     bool hasPickup;
+    public float speedMultiplier = 1f;
+    private LayerMask groundLayer;
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
 
         rb = GetComponent<Rigidbody>();
         layerMask = LayerMask.GetMask("Pickup");
+        groundLayer = LayerMask.GetMask("ground");
     }
     
 
@@ -59,9 +62,17 @@ void Update()
 
         HandleRaycasting();
 
+        float speedMulti = 1;
+
+        if (hasPickup)
+        {
+            PickupComponent pc = camT.GetComponentInChildren<PickupComponent>();
+            speedMulti = pc.speedMulti;
+        }
+
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            if(Physics.BoxCast(transform.position, new Vector3(0.5f, 0, 0.5f), -Vector3.up, Quaternion.identity, 1f))
+            if(Physics.BoxCast(transform.position, new Vector3(0.5f, 0, 0.5f), -Vector3.up, Quaternion.identity, 1f, groundLayer))
             {
                 rb.AddForce(Vector3.up * jumpForce);
             }
@@ -78,7 +89,7 @@ void Update()
 
         movement.Normalize();
 
-        transform.position += movement * speed * Time.deltaTime;
+        transform.position += movement * speed * Time.deltaTime * speedMulti;
 
         camT.position = transform.position;
 
@@ -93,6 +104,8 @@ void Update()
         transform.eulerAngles = Vector3.Scale(transform.eulerAngles, new Vector3(0, 1, 0));
 
         rb.linearVelocity = Vector3.Scale(rb.linearVelocity, new Vector3(0.9f, 1, 0.9f));
+
+
     }
 
     private void LateUpdate()

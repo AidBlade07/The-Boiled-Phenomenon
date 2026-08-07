@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class PickupComponent : MonoBehaviour
@@ -5,6 +6,7 @@ public class PickupComponent : MonoBehaviour
     private Renderer renderer;
     private Material material;
     Rigidbody rb;
+    public float speedMulti = 1f;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
