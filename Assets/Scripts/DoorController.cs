@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Collections;
 public class DoorController : MonoBehaviour
 {
 
@@ -7,6 +7,7 @@ public class DoorController : MonoBehaviour
     public Transform doorT;
     public Transform hingeT;
     public bool doorClosed;
+    bool animating;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -34,22 +35,65 @@ public class DoorController : MonoBehaviour
         }
     }
 
-
-    // Update is called once per frame
-    void Update()
+    IEnumerator OpenSesame()
     {
-        if(Input.GetKeyDown("e") && eRender.enabled)
-        {
+        animating = true;
             if (doorClosed)
             {
-                doorT.RotateAround(hingeT.position, Vector3.up, 90f);
+                for(int i = 0; i < 90; i++)
+                {
+                    doorT.RotateAround(hingeT.position, Vector3.up, 1f);
+                    yield return null;
+                }
                 doorClosed = false;
             }
             else
             {
-                doorT.RotateAround(hingeT.position, Vector3.up, -90f);
+                for (int i = 0; i < 90; i++)
+                {
+                    doorT.RotateAround(hingeT.position, Vector3.up, -1f);
+                yield return null;
+                }
                 doorClosed = true;
             }
+        animating = false;
+        yield return null;
+    }
+
+    IEnumerator DoorShake()
+    {
+        
+        
+        animating = true;
+        for (int i = 0; i < 15; i++)
+        {
+            doorT.RotateAround(hingeT.position, Vector3.up, 1f);
+            yield return null;
+        }
+        for (int i = 0; i< 30; i++)
+        {
+            doorT.RotateAround(hingeT.position, Vector3.up, -1f);
+            yield return null;
+        }
+        for (int i = 0; i< 15; i++)
+        {
+            doorT.RotateAround(hingeT.position, Vector3.up, 1f);
+            yield return null;
+        }
+        animating = false;
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(Input.GetKeyDown("e") && eRender.enabled && !animating)
+        {
+            StartCoroutine(OpenSesame());
+        }
+        if (Input.GetKeyDown("f") && eRender.enabled && !animating)
+        {
+            StartCoroutine(DoorShake());
         }
     }
 }

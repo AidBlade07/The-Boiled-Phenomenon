@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     bool hasPickup;
     public float speedMultiplier = 1f;
     private LayerMask groundLayer;
+    bool camLocked;
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -59,6 +60,10 @@ void HandleRaycasting()
 void Update()
     {
 
+        if(Input.GetKeyDown(KeyCode.V))
+        {
+            camLocked = !camLocked;
+        }
 
         HandleRaycasting();
 
@@ -72,7 +77,7 @@ void Update()
 
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            if(Physics.BoxCast(transform.position, new Vector3(0.5f, 0, 0.5f), -Vector3.up, Quaternion.identity, 1f, groundLayer))
+            if(Physics.BoxCast(transform.position, new Vector3(0.5f, 0, 0.5f), -Vector3.up, Quaternion.identity, 1.1f, groundLayer))
             {
                 rb.AddForce(Vector3.up * jumpForce);
             }
@@ -91,6 +96,7 @@ void Update()
 
         transform.position += movement * speed * Time.deltaTime * speedMulti;
 
+        if(camLocked)
         camT.position = transform.position;
 
         Vector3 rotation = new Vector3(-mouseY * mouseSens, mouseX * mouseSens, 0);
