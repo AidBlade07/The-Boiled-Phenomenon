@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PickupComponent : MonoBehaviour
 {
-    private Renderer renderer;
+    new private Renderer renderer;
     private Material material;
     Rigidbody rb;
     public float speedMulti = 1f;
