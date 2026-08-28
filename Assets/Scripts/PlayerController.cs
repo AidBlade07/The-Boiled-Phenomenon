@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     public float mouseSens;
     public Transform camT;
+    public float boxCastDistance;
     Rigidbody rb;
     private LayerMask layerMask;
     public float pickupDistance;
@@ -71,12 +72,21 @@ void Update()
         if (hasPickup)
         {
             PickupComponent pc = camT.GetComponentInChildren<PickupComponent>();
+
+            if(pc != null)
+            {
             speedMulti = pc.speedMulti;
+            }
+            else
+            {
+                hasPickup = false;
+            }
+
         }
 
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            if(Physics.BoxCast(transform.position, new Vector3(0.5f, 0, 0.5f), -Vector3.up, Quaternion.identity, 1.1f, groundLayer))
+            if(Physics.BoxCast(transform.position, new Vector3(0.5f, 0, 0.5f), -Vector3.up, Quaternion.identity, boxCastDistance, groundLayer))
             {
                 rb.AddForce(Vector3.up * jumpForce);
             }
@@ -108,7 +118,7 @@ void Update()
 
         transform.eulerAngles = Vector3.Scale(transform.eulerAngles, new Vector3(0, 1, 0));
 
-        rb.linearVelocity = Vector3.Scale(rb.linearVelocity, new Vector3(0.9f, 1, 0.9f));
+        // rb.linearVelocity = Vector3.Scale(rb.linearVelocity, new Vector3(0.9f, 1, 0.9f));
 
 
     }

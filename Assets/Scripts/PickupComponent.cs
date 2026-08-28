@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ public class PickupComponent : MonoBehaviour
     new private Renderer renderer;
     private Material material;
     Rigidbody rb;
+    Collider collider;
     public float speedMulti = 1f;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -14,6 +16,7 @@ public class PickupComponent : MonoBehaviour
         renderer = GetComponent<Renderer>();
         material = renderer.material;
         rb = GetComponent<Rigidbody>();
+        collider = GetComponent<Collider>();
     }
 
 
@@ -40,11 +43,13 @@ public class PickupComponent : MonoBehaviour
     {
         transform.parent = newParent;
         rb.isKinematic = true;
+        collider.isTrigger = true;
     }
 
     public void Drop()
     {
         transform.parent = null;
         rb.isKinematic = false;
+        collider.isTrigger = false;
     }
 }
