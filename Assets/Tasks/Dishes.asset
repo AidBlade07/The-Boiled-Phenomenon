@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 66da91813d7ad25479a84dc0a7a24bd4, type: 3}
-  m_Name: Trash
+  m_Name: Dishes
   m_EditorClassIdentifier: Assembly-CSharp::Task
-  name: Trash
-  description: Take the trash bags to the dumpster.
-  tag: Trash
-  maxCount: 0
+  name: Do the dishes.
+  description: asdhfhkjsaf
+  tag: dfgdfg
+  maxCount: 2
   currentCount: 0
