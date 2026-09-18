@@ -1,4 +1,4 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -103,7 +103,9 @@ void Update()
 
         movement.Normalize();
 
-        transform.position += movement * speed * Time.deltaTime * speedMulti;
+        // transform.position += movement * speed * Time.deltaTime * speedMulti;
+
+        rb.AddForce(movement * speed * Time.deltaTime * speedMulti);
 
         if(camLocked)
         camT.position = transform.position;
@@ -118,7 +120,7 @@ void Update()
 
         transform.eulerAngles = Vector3.Scale(transform.eulerAngles, new Vector3(0, 1, 0));
 
-        // rb.linearVelocity = Vector3.Scale(rb.linearVelocity, new Vector3(0.9f, 1, 0.9f));
+        rb.linearVelocity = Vector3.Scale(rb.linearVelocity, new Vector3(0, 1, 0));
 
 
     }
