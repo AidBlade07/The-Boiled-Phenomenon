@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Dishes
   m_EditorClassIdentifier: Assembly-CSharp::Task
   name: Do the dishes.
-  description: asdhfhkjsaf
-  tag: dfgdfg
+  descriptions:
+  - Put the dishes in the dishwasher.
+  - Turn on the dishwasher.
+  tag: Dishes
   maxCount: 2
   currentCount: 0

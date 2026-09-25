@@ -4,7 +4,7 @@ using UnityEngine;
 public class Task : ScriptableObject
 {
     public string name;
-    public string description;
+    public string[] descriptions;
     public string tag;
     public int maxCount;
     public int currentCount;

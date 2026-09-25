@@ -14,6 +14,7 @@ public class ZoneComponent : MonoBehaviour
         {
             Destroy(other.gameObject);
             print("Collected " + gameObject.tag);
+            TaskController.instance.TaskUpdate(gameObject.tag);
         }
     }
 

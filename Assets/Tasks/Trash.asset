@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Trash
   m_EditorClassIdentifier: Assembly-CSharp::Task
   name: Trash
-  description: Take the trash bags to the dumpster.
+  descriptions:
+  - Take the trash out of the trashcan.
+  - Take the trash bag to the dumpster.
   tag: Trash
-  maxCount: 0
+  maxCount: 2
   currentCount: 0
